@@ -1,4 +1,5 @@
 #Inverts all the bits
+#NOT
 print(~3)
 
 

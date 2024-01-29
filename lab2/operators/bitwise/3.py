@@ -1,15 +1,16 @@
-#Sets each bit to 1 if only one of two bits is 1
-print(6 ^ 3)
+#Sets each bit to 1 if one of two bits is 1
+#OR
+print(6 | 3)
 
 
 
 """
-The ^ operator compares each bit and set it to 1 if only one is 1, otherwise (if both are 1 or both are 0) it is set to 0:
+The | operator compares each bit and set it to 1 if one or both is 1, otherwise it is set to 0:
 
 6 = 0000000000000110
 3 = 0000000000000011
 --------------------
-5 = 0000000000000101
+7 = 0000000000000111
 ====================
 
 Decimal numbers and their binary values:
