@@ -85,6 +85,8 @@ def average_score_of_cater(cater):
         if x["category"] == cater:
             sum += x["imdb"]
             cnt += 1
+        else:
+            cnt = 1
     return sum/cnt
 
 s = str(input())
