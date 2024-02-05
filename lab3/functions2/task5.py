@@ -78,14 +78,16 @@ movies = [
 }
 ]
 
-def movie_imdb(s):
+def average_score_of_cater(cater):
+    sum = 0
+    cnt = 0
     for x in movies:
-        if x["name"] == s:
-            if x["imdb"] >= 5.5:
-                print(True)
-                return True
-    print(False)
-    return False
+        if x["category"] == cater:
+            sum += x["imdb"]
+            cnt += 1
+    return sum/cnt
 
 s = str(input())
-movie_imdb(s)
+print(average_score_of_cater(s))
+
+    

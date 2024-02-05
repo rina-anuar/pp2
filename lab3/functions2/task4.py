@@ -77,15 +77,12 @@ movies = [
 "category": "Romance"
 }
 ]
-
-def movie_imdb(s):
+def average_score():
+    cnt = 0
+    all_imdb = 0
     for x in movies:
-        if x["name"] == s:
-            if x["imdb"] >= 5.5:
-                print(True)
-                return True
-    print(False)
-    return False
+        cnt += 1
+        all_imdb += x["imdb"]
+    return all_imdb/cnt
 
-s = str(input())
-movie_imdb(s)
+print(average_score())

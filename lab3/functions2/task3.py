@@ -77,15 +77,13 @@ movies = [
 "category": "Romance"
 }
 ]
-
-def movie_imdb(s):
+my_list = []
+def name_cat(movie):
     for x in movies:
-        if x["name"] == s:
-            if x["imdb"] >= 5.5:
-                print(True)
-                return True
-    print(False)
-    return False
+        if x["category"] == movie:
+            my_list.append(x["name"])
+    return my_list
 
-s = str(input())
-movie_imdb(s)
+film = str(input())
+
+print(name_cat())

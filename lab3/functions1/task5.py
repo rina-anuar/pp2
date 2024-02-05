@@ -1,9 +1,9 @@
 from itertools import permutations
-def Per(str):
-    per_list = permutations(str)
+def Per(s):
+    per_list = permutations(s)
 
     for perm in list(per_list):
          print (''.join(perm))
 
-str = 'ABC'
-Per(str)
+s = 'ABC'
+Per(s)
