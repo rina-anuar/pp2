@@ -1,4 +1,3 @@
-
 import re
 
 def test(pattern, testData, testNumber, expectedResult):
@@ -9,8 +8,8 @@ def test(pattern, testData, testNumber, expectedResult):
     else: 
         print(testNumber + " is not passed!")
 
-pattern = r'ab*'
-test(pattern, "12345", "test1", True)
+pattern = 'ab{2,3}'
+test(pattern, "123ab45", "test1", True)
 test(pattern, "123ab45as", "test2", True)
 test(pattern, "123ab452", "test3", True)
 test(pattern, "123abb452", "test4", True)
