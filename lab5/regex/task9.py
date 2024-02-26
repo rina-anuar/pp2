@@ -12,5 +12,6 @@ def test(pattern, testData, testNumber, expectedResult):
         print(testNumber + " is not passed!")
 
 pattern = r'(?P<X>[a-zA-Z])(?P<Y>[A-Z])'
+pattern2 = r'(\w)([A-Z])'
 test(pattern, "MySuperTest", "test1", "My Super Test")
 test(pattern, " MySuperTest IAmRobot", "test2", " My Super Test I Am Robot")
