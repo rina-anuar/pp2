@@ -7,8 +7,3 @@ y = re.findall(r"\D", txt) # \D кез келген сан емес символ
 
 print(x)
 print(y)
-
-if x:
-  print("Yes, there is at least one match!")
-else:
-  print("No match")

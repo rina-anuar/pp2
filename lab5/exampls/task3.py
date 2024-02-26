@@ -8,8 +8,3 @@ y = re.findall(r"\S", txt) #\S Кез келген пробельный емес
 
 print(x)
 print(y)
-
-if x:
-  print("Yes, there is at least one match!")
-else:
-  print("No match")
