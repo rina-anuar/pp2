@@ -8,7 +8,7 @@ def test(pattern, testData, testNumber, expectedResult):
     else: 
         print(testNumber + " is not passed!")
 
-pattern = r'\b[a-z]+(?:_[a-z]+)+\b'
+pattern = r'^[a-z]+(?:_[a-z]+)+$'
 test(pattern, "apple_apple_mandarin_ghsg", "test1", True)
 test(pattern, "aplle_banana", "test2", True)
 test(pattern, "_banan_mandarin", "test3", True)
