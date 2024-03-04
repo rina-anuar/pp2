@@ -8,5 +8,5 @@ def test_exists(path):
     else:
         print("Path does not exist.")
 
-specified_path = "/Users/rinaanuar/Desktop/pp2/pp2/lab6/task2.py"
-test_exists(specified_path)
+path1 = "/Users/rinaanuar/Desktop/pp2/pp2/lab6/dir_and_files/task4.py"
+test_exists(path1)
