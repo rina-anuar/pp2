@@ -6,4 +6,4 @@ def count_lines(filename):
 
 filename = "example.txt"
 line_count = count_lines(filename)
-print(f"Number of lines in {filename}: {line_count}")
+print(f"Number of lines in {filename} - {line_count}")
