@@ -4,16 +4,17 @@ import sys
 pygame.init()
 size = (800, 600)
 screen = pygame.display.set_mode((size))
+pygame.display.set_caption('mickey mouse clock')
 
 back = pygame.image.load('/Users/rinaanuar/Desktop/pp2/pp2/lab7/clock/back.jpg')
 minutes = pygame.image.load('/Users/rinaanuar/Desktop/pp2/pp2/lab7/clock/minutes.png')
 seconds = pygame.image.load('/Users/rinaanuar/Desktop/pp2/pp2/lab7/clock/seconds.png')
 #hours = pygame.image.load('/Users/rinaanuar/Desktop/pp2/pp2/lab7/clock/hours.png')
 
-while True:
+while True:#infinite loop for show pygame window on the screen 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            exit()
+            exit()#when you press the button esc(x) the window will close
 
     screen.blit(back ,(0, 0))
     now = time.localtime()
