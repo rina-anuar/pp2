@@ -167,7 +167,7 @@ while True:
                 pygame.draw.line(screen, color, (x+(x1-x)/2, y), (x, h), 1)
                 pygame.draw.line(screen, color, (x+(x1-x)/2, y), (x1, h), 1)
                 pygame.draw.line(screen, color, (x1, h), (x, h), 1)
-                pygame.draw.line(screen, color, (x+(x1-x)/2, y), (x+(x1-x)/2, h), 1) #биіктігі
+                #pygame.draw.line(screen, color, (x+(x1-x)/2, y), (x+(x1-x)/2, h), 1) #биіктігі
                 last_event = None  
         #rhombus
         if pen == "rhombus":
