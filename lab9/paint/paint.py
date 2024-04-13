@@ -148,7 +148,7 @@ while True:
             
             if last_event=="not press":
                 
-                pygame.draw.line(screen, color, (x, y),(x, y1) , 1)#
+                pygame.draw.line(screen, color, (x, y),(x, y1) , 1)#бірінші қабырғасын саламыз 
                 pygame.draw.line(screen, color, (x, y1),(x1, y1) , 1)
                 pygame.draw.line(screen, color, (x, y),(x1, y1) , 1)
                 last_event=None
@@ -162,7 +162,7 @@ while True:
                 last_event="not press"
             
             if last_event=="not press":
-                h=y+((math.sqrt(3)*(x1-x))/2)
+                h=y+((math.sqrt(3)*(x1-x))/2)# бұл биіктігі осы биіктік арқылы оренатция жасаймыз табан қабырғасынын жартысы 
                 
                 pygame.draw.line(screen, color, (x+(x1-x)/2, y), (x, h), 1)
                 pygame.draw.line(screen, color, (x+(x1-x)/2, y), (x1, h), 1)
@@ -178,7 +178,7 @@ while True:
                 x1, y1 =pygame.mouse.get_pos()
                 last_event = "not press"
             if last_event == "not press":
-                pygame.draw.line(screen, color, (x, y+(y1-y)/2),(x+(x1-x)/2, y), 1)
+                pygame.draw.line(screen, color, (x, y+(y1-y)/2),(x+(x1-x)/2, y), 1)# төбелерінің коорлинттарын табу үшін 
                 pygame.draw.line(screen, color, (x, y+(y1-y)/2),(x+(x1-x)/2, y1), 1)
                 pygame.draw.line(screen, color, (x+(x1-x)/2, y1),(x1, y+(y1-y)/2), 1)
                 pygame.draw.line(screen, color, (x+(x1-x)/2, y),(x1, y+(y1-y)/2), 1)
