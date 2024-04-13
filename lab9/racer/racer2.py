@@ -26,8 +26,8 @@ game_over1 = font.render("Game Over", True, BLACK)
 
 dw = 400
 dh = 600
-SPEED=7
-USER_SPEED=5
+SPEED=7# player speed 
+USER_SPEED=5# enemy spped 
 SCORE = 0
 coin_score, money_score = 0, 0
 pev_money_score=0
@@ -48,35 +48,6 @@ game = pygame.display.set_caption('Racer')
 #game_over = pygame.transform.scale(game_over, (dw, dh))
 backg = pygame.image.load('AnimatedStreet.png')
 
-
-
-class Timer:
-    def __init__(self):
-        self.start_time = 0
-        self.time_in_pause = 0
-        self.elapsed_time = 0
-
-    def start(self):
-        self.start_time = time.time()
-
-    def pause(self):
-        self.time_in_pause = self.elapsed_time
- 
-    def unpause(self):
-        self.start_time = time.time()
-        
-    def current_time(self):
-        self.elapsed_time = round(time.time() - self.start_time + self.time_in_pause, 2)
-        game_time = font_small.render("time: " + str(self.elapsed_time), True, BLACK)
-        screen.blit(game_time, (10, 140))
-
-    def restart(self):
-        self.__init__()
-        self.start()
-
-    def end(self):
-        game_end_time = font_small.render("Seconds: " + str(self.elapsed_time), True, BLACK)
-        screen.blit(game_end_time, (30, 300))
 
 
 
@@ -116,7 +87,7 @@ class  Enemy(pygame.sprite.Sprite):#спрайттың саб класы
         global SCORE
         self.rect.move_ip(0,SPEED)#перемещая объект Enemy вниз на speed пикселей
         if (self.rect.top>600):#top Получение верхней границы прямоугольника y 
-            SCORE += 1#әр машинанның жанынан өткен сайын скор ға +1
+            #SCORE += 1#әр машинанның жанынан өткен сайын скор ға +1
             self.rect.top=0#if y=0 -> again 
             self.rect.center = (random.randint(40, dw - 40), 0)
     def draw(self):#отвечает за отображение изображения игрока на указанной поверхности 
@@ -148,7 +119,7 @@ class Rubin(pygame.sprite.Sprite):
         self.change_location()
     
     def change_location(self):
-        self.rect.center = (random.randint(15, 385), -3000)
+        self.rect.center = (random.randint(15, 385), -3000)#-3000 себебі алыстан келеді сосын сирек шығатын сияқты көрінеді 
     
     def move(self):
         self.rect.move_ip(0, USER_SPEED)
@@ -159,12 +130,12 @@ class Rubin(pygame.sprite.Sprite):
 
 
 
-P1 = Player()
+P1 = Player()#создание экземпляра класса
 E1 = Enemy()
 C = Coin()
 R1 = Rubin()
 
-T1=Timer()
+
 #Creating Sprites Groups
 enemies = pygame.sprite.Group()
 enemies.add(E1)
@@ -180,7 +151,7 @@ money.add(C)
 money.add(R1)
 
 
-T1.start()
+
 #Adding a new User event 
 #INC_SPEED = pygame.USEREVENT + 1
 #pygame.time.set_timer(INC_SPEED, 1000)
@@ -195,21 +166,18 @@ while is_playing:
             pygame.quit()
             sys.exit()
         if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
-            if PAUSE:
-                T1.unpause()
-                PAUSE = False
+            if pause:
+                pause = False
             else:
-                T1.pause()
-                PAUSE = True
+                pause = True
 
         if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
             for entity in all_sprites:
-                entity.__init__() 
+                entity.__init__()#барлық группадан шақрыпады иниитті 
             coin_score, money_score = 0, 0
             SPEED, USER_SPEED = 8, 5
             pause, end = False, False
             dy = 0
-            T1.restart()
 
 
     if end or pause:
@@ -223,6 +191,7 @@ while is_playing:
 
         '''операция % dh гарантирует, что dy остается в пределах от 
         0 до dh, что позволяет фону двигаться бесконечно вверх'''
+
         scores = font_small.render(str(coin_score), True, BLACK)
         money_scores = font_small.render(str(money_score), True, BLACK)
         current_speed = font_small.render("Your speed: " + str(USER_SPEED), True, BLACK)
@@ -261,29 +230,29 @@ while is_playing:
                 new_coin = Coin()#жаңа койн қосады 
                 coins.add(new_coin)'''
         
-        collide_list = pygame.sprite.spritecollide(P1, money, False)
-        for obj in collide_list:
+        crush_list = pygame.sprite.spritecollide(P1, money, False)#False себебі тру болса біз монейдағы обж өшіріп тастаймыз 
+        for obj in crush_list:
             if obj == C:
-                money_score += 1
+                money_score += 1#койн 1 балл 
+                coin_score += 1
                 C.change_location()
             elif obj == R1:
-                money_score += 3
+                money_score += 3# рубин 3 ббалл 
                 R1.change_location()
                 
                 
         
             
             if money_score >= pev_money_score+10 and money_score > 0:
-                SPEED += 1
+                SPEED += 1#егер моней скор алдынғыға қарағанда 10 ға көп болса энмемидің жылдамдығын бірге арттырамыз
                 pev_money_score=money_score
 
-        T1.current_time()
 
         if pygame.sprite.spritecollideany(P1, enemies):  
 
                 end = True
 
-                pygame.mixer.music.stop()
+                
                 pygame.mixer.Sound('crash.wav').play()
                 time.sleep(1)
 
@@ -292,9 +261,8 @@ while is_playing:
                 
                 screen.fill(RED)
                 screen.blit(game_over1, (30, 150)) 
-                screen.blit(scores, (30, 350))
-                screen.blit(money_scores, (30, 400))
-                T1.end()
+                #screen.blit(scores, (30, 350))
+                #screen.blit(money_scores, (30, 400))
                 
                 pygame.display.update()
                     
