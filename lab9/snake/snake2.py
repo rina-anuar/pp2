@@ -1,5 +1,6 @@
 import pygame as pg 
-from random import randint, randrange, choice
+from random import randint, randrange, choices
+import time
 pg.init()
 
 w, h, fps, level, step = 800, 800, 6, 0, 40 # разделяем окно на 400 квадратиков, 20 на 20
@@ -8,7 +9,7 @@ pg.display.set_caption('Snake Game')
 is_running, lose = True, False
 clock = pg.time.Clock()
 score = pg.font.SysFont("Verdana", 20)
-surf = pg.Surface((390, 390), pg.SRCALPHA)
+surf = pg.Surface((390, 390), pg.SRCALPHA)#гэйм оверді главный экран бетіне қою үшін(сурет үстіне сурет қою)
 bg = pg.image.load("back.png")
 bg = pg.transform.scale(bg, (w, h))
 gameover = pg.image.load("game_over.jpeg")
@@ -19,7 +20,7 @@ rush = False
 
 class Food:
     def __init__(self, im):
-        # задаем рандомные координаты для еды в диапазоне игрового поля с шагом в 40
+        #әр 40 пиксел ішінде фуд координаталарын анықтайды 
         self.x = randrange(0, w, step)
         self.y = randrange(0, h, step)
         self.r = 0
@@ -33,19 +34,20 @@ class Food:
         self.x = randrange(0, w, step)
         self.y = randrange(0, h, step)
         #self.r = choice([1, 2, 3])
-        self.r = randrange(1, 4)
+        #self.r = randrange(1, 4)
+        self.r = randint(1, 3)
         self.image = pg.image.load(f'food{self.r}.png')
         
 
 
 class Snake:
     def __init__(self):
-        self.speed = step
-        self.body = [[360, 360]] # изначальные координаты головы
+        self.speed = step#снэйк step пикселге қозғалып отырады
+        self.body = [[360, 360]] #басының бастапқы кординаталары
         self.dx = 0
         self.dy = 0
         self.score = 0
-        self.color = 'green'
+        self.color = 'blue'
     
     def move(self, events):
         for event in events:
@@ -63,38 +65,37 @@ class Snake:
                     self.dx = 0#x бойынша жылжымайды
                     self.dy = self.speed
 
-        # передвигаем части тела змейки по х и у на предыдущие координаты
+        #снэйктің басынан басқасын осындай кординатларға жылжытамыз
         for i in range(len(self.body) - 1, 0, -1):
             self.body[i][0] = self.body[i - 1][0] 
             self.body[i][1] = self.body[i - 1][1]
 
-        # передвигаем голову змейки по х и у на следующие координаты
+        #снэйк басын жылжытамыз клав тан басылған сайын 
         self.body[0][0] += self.dx 
         self.body[0][1] += self.dy 
 
     def draw(self):
         for part in self.body:
-            pg.draw.rect(screen, self.color, (part[0], part[1], step, step))
+            pg.draw.rect(screen, self.color, (part[0], part[1], step, step))#step x step шаршы салады part[0], part[1] осы точкаларда 
     
-    # проверяем когда змейка съедает еду
+    #снэйк фуд жегенін тексереміз
     def collide_food(self, f:Food):
-        if self.body[0][0] == f.x and self.body[0][1] == f.y: # если координаты головы змейки совпадают с координатами еды
+        if self.body[0][0] == f.x and self.body[0][1] == f.y: #егер снэйк басының координаталары фудпен сәйкес келсе скоре фуд салмағына  арттырамыз
             self.score += f.r # добавляем разный скор соответствующий разным видам еды
             global rush
             rush = True
-            self.body.append([1000, 1000]) 
+            self.body.append([900, 900]) 
     
-    # заканчиваем игру, если голова змейки столкнеться со своим телом
+    #гэйм овер егер снэйк басы өзінің денесімен соғылса 
     def self_collide(self):
         global is_running
-        if self.body[0] in self.body[1:]: # если голова змейки и входит в массив координат тела змейки
-            lose = True # запускаем цикл 'game_over' 
+        if self.body[0] in self.body[1:]: #егер денесінің координаталары басымен сәйкес келсе 
+            lose = True #гэйм овер
 
-    # проверяем чтобы еда не оказалась на теле змейки
+    
     def check_food(self, f:Food): 
-        if [f.x, f.y] in self.body: # если координаты еды входят в массив координат тела змейки
-            f.draw2() # заново рисуем еду
-
+        if [f.x, f.y] in self.body: #фуд снэйк басына тиді ма соны тексереді 
+            f.draw2() #фуд қайта саламыз 
 
 class Wall:
     def __init__(self, x, y):
@@ -106,54 +107,57 @@ class Wall:
         screen.blit(self.pic, (self.x, self.y))
 
 def disappear(t):
-    pg.time.set_timer(pg.USEREVENT, t)
+    pg.time.set_timer(pg.USEREVENT, t)#pg.USEREVENT ползователь события, t неше уақыттан кейін жоқ болады 
 
-# создаем объекты змейки и еды
+#снэйк пен фудқа объэкт жасаймыз
 s = Snake()
 f = Food(pg.image.load(f'food{randint(1,3)}.png'))
-disappear(5000)
-# запускаем основной цикл
+disappear(5000)# 5000 мили сикунттан кейін жоқ болады 
+
+
 while is_running:
     clock.tick(fps)
     events = pg.event.get()
     for event in events:
         if event.type == pg.QUIT:
             is_running = False
-        if event.type == pg.USEREVENT and rush == False: # еда появляется каждые пять секунд
-            f.draw2() # через 5 секунд перерисовывется
+        if event.type == pg.USEREVENT and rush == False: #әр 5 сек сайын фуд пайда болады 
+            f.draw2() #5 секунттан кейін қайта салынады 
 
     screen.blit(bg, (0, 0))
 
-    # прорисовываем стенки с помощью заранее написанных паттернов  
-    my_walls = open(f'wall{level}.txt', 'r').readlines() # читает каждую линию как отдельный лист
+    my_walls = open(f'wall{level}.txt', 'r').readlines() #әр жолды жеке лист ретінде оқиды
     walls = []
-    for i, line in enumerate(my_walls): # проходимся по индексу и строке
-        for j, each in enumerate(line): # проходимся по каждому элементу в строке
-            if each == "+":
-                walls.append(Wall(j * step, i * step)) # добавляем каждый блок стенки в лист
+    for i, line in enumerate(my_walls): #әр жолмен жүгіріп өтеміз
+        for j, each in enumerate(line): #әр элеметтпен жүріп өтеміз
+            if each == "+":#егер ол + қа тең болса 
+                walls.append(Wall(j * step, i * step)) #сол i мен j координаталарын степқа көбейтеміз координатдан пиксел жасағымыз келеді 
 
-    # вызываем методы классов
+
+    #класстардың методтарын шақырамыз
     f.draw()
     s.draw()
-    s.move(events) # нажать любую клавишу (a, s, d, w) чтобы начать игру
+    s.move(events) #UP DOWN keft right басылуы евентс
     s.collide_food(f)
     s.self_collide()
     s.check_food(f)
 
-    # высвечиваем текущие баллы и уровень на экран
+    #скор және левлді экранға шығарамыз 
     counter = score.render(f'Score: {s.score}', True, 'black')
+    #render сурет бетіне жазу жазу үшін қоладнылады (score = pg.font.SysFont("Verdana", 20) осындай болып жазылады)
     screen.blit(counter, (50, 50))
     l = score.render(f'Level: {level}', True, 'black')
     screen.blit(l, (50, 80))
 
-    # условие для перехода на следующий уровень
+    #келесі кезеңге өту үшін шарт 
     if s.score >= 3:
-        level += 1 # увеличиваем уровень
-        level %= 4 
-        fps += 2 # увеличиваем скорость
-        s.score = 0 # новый счетчик для следующего уровня
+        level += 1 #егер скоре 3 ке тең болғанда левелді бірге арттырамыз 
+        level %= 3 
+        fps += 2 #жылдамдықты арттырамыз
+        s.score = 0 #келесі левелге жаңа скор
+       
 
-    # высвечиваем стенки на экран
+
     #wallдарды экранға шығрамыз
     for wall in walls:
         wall.draw()
@@ -163,12 +167,13 @@ while is_running:
         if s.body[0][0] == wall.x and s.body[0][1] == wall.y: #гэйм овер егер снэйк денесі валллға тисе 
             lose = True
 
-    if rush == True: # если мы съедаем еду, она заново перерисовывается и она заново будет стоять 5 секунд
+    if rush == True: #егер біз тамақты жесек 
         timmer = 5000
         disappear(timmer)
         f.draw2() 
         rush = False
-    # запускаем цикл 'game_over'
+
+    #цикл 'game_over'
     while lose:
         clock.tick(fps)
         for event in pg.event.get():
@@ -182,6 +187,6 @@ while is_running:
         l = score.render(f'Your level is {level}', True, 'black')
         screen.blit(l, (322, 520))
         pg.display.flip()
-
+       
     pg.display.flip()
 pg.quit()
