@@ -182,10 +182,10 @@ while is_running:
                 lose = False   
         surf.blit(gameover, (0, 0))
         screen.blit(surf, (200, 200))
-        cntr = score.render(f'Your score is {s.score}', True, 'black')
-        screen.blit(cntr, (320, 500))
-        l = score.render(f'Your level is {level}', True, 'black')
-        screen.blit(l, (322, 520))
+        #cntr = score.render(f'Your score is {s.score}', True, 'black')
+        #screen.blit(cntr, (320, 500))
+        #l = score.render(f'Your level is {level}', True, 'black')
+        #screen.blit(l, (322, 520))
         pg.display.flip()
        
     pg.display.flip()
