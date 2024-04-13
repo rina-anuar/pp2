@@ -230,7 +230,7 @@ while is_playing:
                 new_coin = Coin()#жаңа койн қосады 
                 coins.add(new_coin)'''
         
-        crush_list = pygame.sprite.spritecollide(P1, money, False)#False себебі тру болса біз монейдағы обж өшіріп тастаймыз 
+        crush_list = pygame.sprite.spritecollide(P1, money, False)#False себебі тру болса біз монейдағы обж шіріп тастаймыз 
         for obj in crush_list:
             if obj == C:
                 money_score += 1#койн 1 балл 
