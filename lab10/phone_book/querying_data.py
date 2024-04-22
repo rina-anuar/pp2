@@ -14,10 +14,10 @@ sql1 = '''
 '''
 # запрос номера телефона определенного человека 
 sql2 = '''
-    SELECT number_value FROM phone_number WHERE name = 'rin'
+    SELECT number_value FROM phone_number WHERE name = ' Rina'
 '''
 sql3 = '''
-    SELECT * FROM phone_number WHERE surname='Anuar'
+    SELECT * FROM phone_number WHERE surname=' Anuar'
 '''
 current.execute(sql2)
 
