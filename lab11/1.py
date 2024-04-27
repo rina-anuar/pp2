@@ -12,7 +12,8 @@ def find(pattern):
         SELECT * FROM phone_number WHERE name LIKE %s OR surname LIKE %s OR number_value LIKE %s
 
     '''
-    current.execute(sql, (pattern,  pattern, pattern))
+    pattern2=pattern+'%'
+    current.execute(sql, (pattern2,  pattern2, pattern2))
     record = current.fetchall()#іздеген нәрсені тюпл ретінде қайтарады
     if record:
         for i in record:
