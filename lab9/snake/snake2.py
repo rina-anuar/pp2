@@ -148,7 +148,6 @@ while is_running:
     screen.blit(counter, (50, 50))
     l = score.render(f'Level: {level}', True, 'black')
     screen.blit(l, (50, 80))
-
     #келесі кезеңге өту үшін шарт 
     if s.score >= 3:
         level += 1 #егер скоре 3 ке тең болғанда левелді бірге арттырамыз 
@@ -182,10 +181,10 @@ while is_running:
                 lose = False   
         surf.blit(gameover, (0, 0))
         screen.blit(surf, (200, 200))
-        #cntr = score.render(f'Your score is {s.score}', True, 'black')
-        #screen.blit(cntr, (320, 500))
-        #l = score.render(f'Your level is {level}', True, 'black')
-        #screen.blit(l, (322, 520))
+        cntr = score.render(f'Your score is {s.score}', True, 'black')
+        screen.blit(cntr, (320, 500))
+        l = score.render(f'Your level is {level}', True, 'black')
+        screen.blit(l, (322, 520))
         pg.display.flip()
        
     pg.display.flip()

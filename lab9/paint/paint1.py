@@ -195,8 +195,8 @@ while True:
                 x1, y1 =pygame.mouse.get_pos()
                 last_event = "not press"
             if last_event == "not press":
-                pygame.draw.ellipse(screen, color, (x, y, x1-x, y1-y))
-                last_event=None
+                pygame.draw.ellipse(screen, color,(x, y, x1, y1), -1)
+                last_event = None
                 
 
     clock.tick(FPS)       

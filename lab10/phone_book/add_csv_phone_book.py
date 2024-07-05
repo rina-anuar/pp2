@@ -23,8 +23,8 @@ def csv_add(name_csv):
     for i in arr:  
         currnet.execute(sql, i)
 
-    final = currnet.fetchall()
-    print(final)
+    #final = currnet.fetchall()
+    #print(final)
 
     currnet.close()#завершает базы данных сеанс работы
     config.commit()#сохранить изменения, для подтверждения этих изменени
